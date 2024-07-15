@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cart/cart.dart';
 
 import '../bloc/cubit.dart';
 import '../bloc/states.dart';
 
-class Item extends StatelessWidget {
+class Item extends StatefulWidget {
    Item({super.key});
-bool itemc=false;
+
+  @override
+  State<Item> createState() => _ItemState();
+}
+
+class _ItemState extends State<Item> {
+  Map<int, bool> itemc = {};
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductState>(
@@ -24,6 +32,9 @@ bool itemc=false;
               final product = state.products[index];
               final originalPrice =
                   product.price / (1 - product.discountPercentage / 100);
+              if (!itemc.containsKey(product.id)) {
+                itemc[product.id] = false;
+              }
               return Stack(
                 alignment: Alignment.topRight,
                 children: [
@@ -125,7 +136,9 @@ bool itemc=false;
                                     width: 25,
                                     height: 25,
                                     child: FloatingActionButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+
+                                        },
                                         backgroundColor: Color(0xff072e81),
                                         mini: true,
                                         elevation: 0,
@@ -158,10 +171,20 @@ bool itemc=false;
                       ),
                       child: IconButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+
+                            setState(() {
+                              itemc[product.id] = !itemc[product.id]!;
+                            });
+
+                          },
                           icon: Icon(
-                            Icons.favorite_border_outlined,
-                            color: Color(0xff072e81),
+                            itemc[product.id]!
+                                ? Icons.favorite
+                                : Icons.favorite_border_outlined,
+                            color: itemc[product.id]!
+                                ? Colors.red
+                                : Color(0xff072e81),
                           )),
                     ),
                   ),

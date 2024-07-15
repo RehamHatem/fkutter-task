@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cart/cart.dart';
 import 'package:flutter_task/features/home/presentation/bloc/states.dart';
 import 'package:injectable/injectable.dart';
 
@@ -20,3 +21,8 @@ class ProductCubit extends Cubit<ProductState> {
     }
   }
 }
+
+
+
+
+

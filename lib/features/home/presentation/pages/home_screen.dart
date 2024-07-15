@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cart/cart.dart';
 import '../../data/DI/injection.dart';
 import '../bloc/cubit.dart';
 import 'item.dart';
@@ -42,19 +43,22 @@ class HomeScreen extends StatelessWidget {
                             borderSide: BorderSide.none,
 
                           ),
+                          focusedBorder:OutlineInputBorder(borderRadius:BorderRadius.circular(25),borderSide: BorderSide(color: Color(0xff072e81)) ) ,
+
                           enabledBorder: OutlineInputBorder(borderRadius:BorderRadius.circular(25),borderSide: BorderSide(color: Color(0xff072e81)) ),
                           fillColor: Colors.grey[200],
                         ),
+
                       ),
                     ),
                     Expanded(
-                      child: IconButton(
-                        icon: Icon(Icons.shopping_cart_outlined,size: 30,color: Color(0xff072e81),),
-                        onPressed: () {
-                          // Handle cart action
-                        },
-                      ),
+                    child: IconButton(
+                      icon: Icon(Icons.shopping_cart_outlined,size: 30,color: Color(0xff072e81),),
+                      onPressed: () {
+                        // Handle cart action
+                      },
                     ),
+                                            ),
                   ],
                 ),
               ),
