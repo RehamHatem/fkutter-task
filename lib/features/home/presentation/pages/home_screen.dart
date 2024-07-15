@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cart/cart.dart';
 import '../../data/DI/injection.dart';
 import '../bloc/cubit.dart';
 import 'item.dart';
@@ -20,6 +19,7 @@ class HomeScreen extends StatelessWidget {
           color: Color(0xff072e81),fontSize: 30
         ),),
         backgroundColor: Colors.white,
+
 
       ),
       body: BlocProvider(
@@ -52,11 +52,19 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                    child: IconButton(
-                      icon: Icon(Icons.shopping_cart_outlined,size: 30,color: Color(0xff072e81),),
-                      onPressed: () {
-                        // Handle cart action
-                      },
+                    child: BlocBuilder<CartCubit, int>(
+                      builder: (context, cartCount) {
+
+                      return Badge.count(
+                        count:cartCount ,
+                        child: IconButton(
+                          icon: Icon(Icons.shopping_cart_outlined,size: 30,color: Color(0xff072e81),),
+                          onPressed: () {
+                            // Handle cart action
+                          },
+                        ),
+                      );
+  },
                     ),
                                             ),
                   ],

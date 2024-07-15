@@ -22,6 +22,13 @@ class ProductCubit extends Cubit<ProductState> {
   }
 }
 
+class CartCubit extends Cubit<int> {
+  CartCubit() : super(0);
+
+  void addToCart() {
+    emit(state + 1);
+  }
+}
 
 
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cart/cart.dart';
-
 import '../bloc/cubit.dart';
 import '../bloc/states.dart';
 
@@ -137,6 +135,7 @@ class _ItemState extends State<Item> {
                                     height: 25,
                                     child: FloatingActionButton(
                                         onPressed: () {
+                                          context.read<CartCubit>().addToCart();
 
                                         },
                                         backgroundColor: Color(0xff072e81),
