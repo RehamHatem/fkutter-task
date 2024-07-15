@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../data/DI/injection.dart';
 import '../bloc/cubit.dart';
 import 'item.dart';
 
@@ -10,20 +11,59 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      extendBody: false,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
-        title: Text('Products'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              // Handle cart action
-            },
-          ),
-        ],
+        title: Text('Route',style: TextStyle(
+          color: Color(0xff072e81),fontSize: 30
+        ),),
+        backgroundColor: Colors.white,
+
       ),
       body: BlocProvider(
         create: (_) => getIt<ProductCubit>()..fetchProducts(),
-        child: Item(),
+        child: Padding(
+          padding: const EdgeInsets.only(top:8 ,left:10 ,right: 10),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'What do you search for?',
+                          prefixIcon: Icon(Icons.search,color: Color(0xff072e81),size: 25,),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                            borderSide: BorderSide.none,
+
+                          ),
+                          enabledBorder: OutlineInputBorder(borderRadius:BorderRadius.circular(25),borderSide: BorderSide(color: Color(0xff072e81)) ),
+                          fillColor: Colors.grey[200],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: IconButton(
+                        icon: Icon(Icons.shopping_cart_outlined,size: 30,color: Color(0xff072e81),),
+                        onPressed: () {
+                          // Handle cart action
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Item(),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

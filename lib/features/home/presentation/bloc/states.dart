@@ -1,10 +1,9 @@
-import '../../data/models/Products.dart';
+import '../../data/models/Product.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class ProductState  {
-  ProductState();
-
+abstract class ProductState extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class ProductInitial extends ProductState {}
@@ -12,18 +11,19 @@ class ProductInitial extends ProductState {}
 class ProductLoading extends ProductState {}
 
 class ProductSuccess extends ProductState {
-  final List<Products> products;
+    List<Product> products;
 
-  ProductSuccess(this.products);
+    ProductSuccess(this.products);
 
   @override
-  List<Object> get props => [products];
+  List<Object?> get props => [products];
 }
 
 class ProductError extends ProductState {
   final String message;
+
   ProductError(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [message];
 }

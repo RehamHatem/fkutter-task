@@ -5,8 +5,8 @@ import '../bloc/cubit.dart';
 import '../bloc/states.dart';
 
 class Item extends StatelessWidget {
-  const Item({super.key});
-
+   Item({super.key});
+bool itemc=false;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductState>(
@@ -14,31 +14,158 @@ class Item extends StatelessWidget {
         if (state is ProductLoading) {
           return Center(child: CircularProgressIndicator());
         } else if (state is ProductSuccess) {
-          return ListView.builder(
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.55,
+            ),
             itemCount: state.products.length,
             itemBuilder: (context, index) {
               final product = state.products[index];
-              return Card(
-                margin: EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Image.network(product.thumbnail!),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(product.title!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text(product.description!),
-                          Text('Price: EGP ${product.price}'),
-                          Text('Rating: ${product.rating}'),
-                          Text('Stock: ${product.stock}'),
-                          Text('Category: ${product.category}'),
-                        ],
-                      ),
+              final originalPrice =
+                  product.price / (1 - product.discountPercentage / 100);
+              return Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Card(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Color(0xff072e81), width: .5),
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
-                  ],
-                ),
+                    margin: EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(10.0)),
+                          child: Image.network(
+                            product.thumbnail,
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff072e81),
+                                ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                product.description,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Color(0xff072e81),
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              Row(
+                                children: [
+                                  Text(
+                                    'EGP ${product.price}',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Color(0xff072e81),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "${originalPrice.toStringAsFixed(2)} EGP",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        decorationColor: Colors.blueAccent,
+                                        decorationThickness: 2,
+
+                                        color: Colors.blueAccent,
+                                        fontSize: 11),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Review (${product.rating})',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Color(0xff072e81),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Icon(
+                                    Icons.star,
+                                    size: 16.0,
+                                    color: Colors.amber,
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    child: FloatingActionButton(
+                                        onPressed: () {},
+                                        backgroundColor: Color(0xff072e81),
+                                        mini: true,
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 20,
+
+                                        )),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      padding: EdgeInsets.zero,
+                      margin: EdgeInsets.zero,
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.favorite_border_outlined,
+                            color: Color(0xff072e81),
+                          )),
+                    ),
+                  ),
+                ],
               );
             },
           );

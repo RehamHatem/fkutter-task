@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'features/home/data/DI/injection.dart';
 import 'features/home/presentation/pages/home_screen.dart';
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
